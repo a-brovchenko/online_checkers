@@ -1,0 +1,31 @@
+{% extends 'game/base.html' %}
+{% load static %}
+
+{% block style %}
+<link href="{% static 'css/profile.css' %}" rel="stylesheet">
+{% endblock style %}
+
+{% block title %}
+    <div class="user-profile">
+        <h3>Профиль пользователя: {{ user.username }}</h3>
+        {% if request.user.id == user.id or admin.is_admin %}
+
+            <a href="{% url 'edit_profile' user.id %}">Редактировать данные</a>
+        {% endif %}
+        <h3>{{user2}}</h3>
+        <table class="user-details">
+            <tr>
+                <td><strong>Имя:</strong></td>
+                <td>{{ user.first_name }}</td>
+
+            </tr>
+            <tr>
+                <td><strong>Фамилия:</strong></td>
+                <td>{{ user.last_name }}</td>
+
+            </tr>
+        </table>
+    </div>
+{% endblock title %}
+
+{% block table %}{% endblock table %}

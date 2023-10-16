@@ -1,0 +1,27 @@
+{% extends 'game/base.html' %}
+{% load static %}
+
+{% block table %}
+<div class="online-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Доска</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for board in boards %}
+                <tr>
+                    <td class="board-info">
+                        <a href="{% url 'game' board %}">{{ board }}</a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock table %}
+
+{% block title%}{% endblock title %}
+

@@ -1,0 +1,159 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    margin: 0;
+}
+
+.container {
+    max-width: 70%;
+    margin: 5px auto;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    min-height: calc(100vh - 40px); /* 100vh - высота header и footer */
+    margin-bottom: 20px;
+}
+
+.online-table {
+    max-width: 90%;
+    margin: 10px auto;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.online-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.online-table th,
+.online-table td {
+    border: 1px solid #ddd;
+    padding: 10px; /* Увеличил отступы для ячеек таблицы */
+    text-align: left;
+}
+
+.online-table th {
+    background-color: #f2f2f2;
+}
+
+.online-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Стили для ячейки user-info */
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.user-info a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* Стили для ссылок */
+a {
+    color: #007BFF;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* Стили для кнопки "Сразиться" */
+.challenge-button {
+    background-color: gray;
+    color: #fff;
+    border: none;
+    padding: 8px 15px; /* Увеличьте отступы */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.challenge-button:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+}
+
+.close {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #f00;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}

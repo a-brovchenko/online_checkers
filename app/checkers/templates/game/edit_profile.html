@@ -1,0 +1,24 @@
+{% extends 'game/base.html' %}
+
+{% block title %}
+<div class="user-profile">
+    <h3>Редактировать профиль пользователя: {{ user.username }}</h3>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="user-details">
+        <tr>
+            <td><label for="first_name">Имя:</label></td>
+            <td><input type="text" id="first_name" name="first_name" value="{{ user.first_name }}"></td>
+        </tr>
+        <tr>
+            <td><label for="last_name">Фамилия:</label></td>
+            <td><input type="text" id="last_name" name="last_name" value="{{ user.last_name }}"></td>
+        </tr>
+    </table>
+    <input type="submit" value="Сохранить">
+</form>
+{% endblock title %}
+
+{% block table %}{% endblock table %}

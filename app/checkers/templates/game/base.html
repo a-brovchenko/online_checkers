@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Онлайн шашки</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="{% static 'css/base1.css' %}" rel="stylesheet">
+    {% block style %}{% endblock style %}
+</head>
+
+<body>
+    <header>
+        <h1>Онлайн шашки</h1>
+    </header>
+    <div class="container">
+        <form>
+            {% csrf_token %}
+        </form>
+
+        {% block title %}
+        <h2>Добро пожаловать на наш сайт!</h2>
+        <p>Играйте в шашки онлайн и наслаждайтесь этой захватывающей игрой.</p>
+        {% if not user.is_authenticated %}
+            <p>Для начала игры, пожалуйста, <a href="/accounts/login/">Войдите</a> или <a href="/register/">Зарегистрируйтесь</a>.</p>
+        {% else %}
+            <p>Для создания игры, пожалуйста <a href="/table">Создайте новую игру</a> или <a href="/list_board/">Найдите игру</a>.</p>
+            <a href="/accounts/logout/">Выйти</a>
+        {% endif %}
+        {% endblock title %}
+
+        {% block table %}
+        {% if user.is_authenticated %}
+            <div class="online-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Игрок</th>
+                            <th>Игр сыграно</th>
+                            <th>Игр выиграно</th>
+                            <th>Статус админа</th>
+                        </tr>
+                    </thead>
+                    <body>
+                    <div id="user-id" data-user-id="{{ request.user.id }}"></div>
+                    <h3>Игроки онлайн</h3>
+                        {% for user in online_users %}
+                            {% if request.user.id != user.user.id %}
+                                <tr>
+                                    <td class="user-info">
+                                        <a href="/user/{{ user.user.id }}"/>{{ user.user.username }}</a>
+                                    </td>
+                                    <td>{{ user.user.userprofile.games_played }}</td>
+                                    <td>{{ user.user.userprofile.games_won }}</td>
+                                    {% if user.user.userprofile.is_admin %}
+                                        <td>Админ</td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </body>
+                </table>
+            </div>
+        {% endif %}
+        {% endblock table %}
+    </div>
+
+    <footer>
+        &copy; 2023 Онлайн шашки
+    </footer>
+
+</body>
+</html>
