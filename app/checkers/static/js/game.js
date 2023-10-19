@@ -391,6 +391,9 @@ function checkForWin() {
                     'board': textContent,
                     'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
                 },
+                success: function(response) {
+                    window.location.href = '/';
+                },
         });
     } else if (redScore === 0) {
         divider.style.display = "none";
@@ -407,6 +410,9 @@ function checkForWin() {
                     'player': 'player2',
                     'board': textContent,
                     'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function(response) {
+                    window.location.href = '/';
                 },
         });
     }
