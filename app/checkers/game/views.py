@@ -156,4 +156,14 @@ def end_game(request):
         board.checkers = int(score)
         board.save()
 
+        p1 = UserProfile.objects.get(user_id=board.player1)
+        p2 = UserProfile.objects.get(user_id=board.player2)
+        if p1.user_id == board.winner:
+            p1.games_won += 1
+        else:
+            p2.games_won += 1
+        p1.games_played += 1
+        p2.games_played += 1
+        p1.save()
+        p2.save()
         return JsonResponse({'1' : 1})

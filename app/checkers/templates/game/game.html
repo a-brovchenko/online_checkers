@@ -15,11 +15,12 @@
 </head>
 <body>
     <main>
-        <p>{{ board_name }}</p>
+        <strong>{{ board_name }}</strong>
         <user>{{ request.user.id }}</user>
         <div class="red-turn-text mobile">
             Ходит Игрок1
         </div>
+        <table>
         <table>
             <tr>
                 <td class="noPieceHere"></td>
@@ -106,7 +107,7 @@
             <div class="red-turn-text">
                 Ходит Игрок1
             </div>
-            <p id="divider">|</p>
+<!--            <p id="divider">|</p>-->
             <div class="black-turn-text">
                 Ходит Игрок2
             </div>
