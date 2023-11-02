@@ -46,7 +46,6 @@ def new_board(request):
 
 def list_board(request):
     boards = Board.objects.filter(player2=0)
-    logging.info(f'board - {boards}')
     return render(request, 'game/list_board.html', {'boards': boards})
 
 
@@ -134,8 +133,6 @@ def change_move(request):
     if request.method == 'POST':
         turn = request.POST.get('turn')
         player = request.POST.get('player')
-        logging.info(f'player - {player}')
-        logging.info(f'turn - {turn}')
         if turn == 'false':
             turn = False
         else:

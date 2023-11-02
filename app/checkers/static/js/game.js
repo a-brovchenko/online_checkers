@@ -19,7 +19,7 @@ let redScore = 12;
 let blackScore = 12;
 let playerPieces;
 let mustMove = []
-
+nextJump = false
 // parses pieceId's and returns the index of that piece's place on the board
 let findPiece = function (pieceId) {
     let parsed = parseInt(pieceId);
@@ -89,11 +89,13 @@ $.ajax({
 /*---------- Event Listeners ----------*/
 
 // initialize event listeners on pieces
-function givePiecesEventListeners() {
+function givePiecesEventListeners(jump) {
     if (turn) {
-       for (let i = 0; i < redsPieces.length; i++) {
-            getPlayerPieces(Number(redsPieces[i].id))
-       }
+        if (jump === undefined){
+            for (let i = 0; i < redsPieces.length; i++) {
+                getPlayerPieces(Number(redsPieces[i].id))
+            }
+        }
        if (mustMove.length > 0){
             for (let i = 0; i < redsPieces.length; i++) {
                 const pieceId = Number(redsPieces[i].id);
@@ -245,10 +247,6 @@ function checkAvailableJumpSpaces(id) {
             selectedPiece.minusEighteenthSpace = true;
         }
     }
-    if (id !== undefined){
-        console.log(selectedPiece.fourteenthSpace, selectedPiece.eighteenthSpace,
-        selectedPiece.minusFourteenthSpace,selectedPiece.minusEighteenthSpace)
-    }
     if ((selectedPiece.fourteenthSpace || selectedPiece.eighteenthSpace ||
         selectedPiece.minusFourteenthSpace || selectedPiece.minusEighteenthSpace) && selectedPiece.indexOfBoardPiece >= 0) {
         mustMove.push(selectedPiece.pieceId)
@@ -396,10 +394,9 @@ function makeMove(number) {
 
 // Changes the board states data on the back end
 function changeData(indexOfBoardPiece, modifiedIndex, removePiece) {
-    console.log(selectedPiece.pieceId)
     board[indexOfBoardPiece] = null;
     board[modifiedIndex] = parseInt(selectedPiece.pieceId);
-    if (turn && selectedPiece.pieceId < 12 && modifiedIndex >= 57) {
+    if (turn && selectedPiece.pieceId < 12 && modifiedIndex >= 56) {
         document.getElementById(selectedPiece.pieceId).classList.add("king")
     }
     if (turn === false && selectedPiece.pieceId >= 12 && modifiedIndex <= 7) {
@@ -420,13 +417,23 @@ function changeData(indexOfBoardPiece, modifiedIndex, removePiece) {
         selectedPiece.minusFourteenthSpace = false;
         selectedPiece.minusEighteenthSpace = false;
         checkAvailableJumpSpaces(selectedPiece.pieceId);
+        nextJump = false
+
+        if (selectedPiece.isKing && (selectedPiece.fourteenthSpace || selectedPiece.eighteenthSpace
+        || selectedPiece.minusFourteenthSpace || selectedPiece.minusEighteenthSpace)){
+            nextJump = true
+            mustMove = [selectedPiece.pieceId]
+        }else if (turn && (selectedPiece.fourteenthSpace || selectedPiece.eighteenthSpace)){
+            nextJump = true
+            mustMove = [selectedPiece.pieceId]
+        }else if (!turn && (selectedPiece.minusFourteenthSpace || selectedPiece.minusEighteenthSpace)){
+            nextJump = true
+            mustMove = [selectedPiece.pieceId]
+        }
     }
-    if (selectedPiece.fourteenthSpace || selectedPiece.eighteenthSpace ||
-    selectedPiece.minusFourteenthSpace || selectedPiece.minusEighteenthSpace){
-        mustMove = [selectedPiece.pieceId]
-        console.log(selectedPiece.fourteenthSpace, selectedPiece.eighteenthSpace,
-        selectedPiece.minusFourteenthSpace || selectedPiece.minusEighteenthSpace)
-        givePiecesEventListeners()
+    if (nextJump){
+        nextJump = false
+        givePiecesEventListeners(mustMove)
     }else{
         mustMove = []
         resetSelectedPieceProperties();
