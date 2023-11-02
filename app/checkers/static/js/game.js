@@ -20,6 +20,7 @@ let blackScore = 12;
 let playerPieces;
 let mustMove = []
 nextJump = false
+
 // parses pieceId's and returns the index of that piece's place on the board
 let findPiece = function (pieceId) {
     let parsed = parseInt(pieceId);
@@ -31,7 +32,7 @@ const cells = document.querySelectorAll("td");
 let redsPieces = document.querySelectorAll("p");
 let blacksPieces = document.querySelectorAll("span")
 const redTurnText = document.querySelectorAll(".red-turn-text");
-const blackTurntext = document.querySelectorAll(".black-turn-text");
+const blackTurnText = document.querySelectorAll(".black-turn-text");
 const divider = document.querySelector("#divider")
 
 
@@ -461,7 +462,7 @@ function checkForWin() {
     if (blackScore === 0) {
         for (let i = 0; i < redTurnText.length; i++) {
             redTurnText[i].style.color = "black";
-            blackTurntext[i].style.display = "none";
+            blackTurnText[i].style.display = "none";
             redTurnText[i].textContent = "RED WINS!";
         }
         $.ajax({
@@ -478,10 +479,10 @@ function checkForWin() {
                 },
         });
     } else if (redScore === 0) {
-        for (let i = 0; i < blackTurntext.length; i++) {
-            blackTurntext[i].style.color = "black";
+        for (let i = 0; i < blackTurnText.length; i++) {
+            blackTurnText[i].style.color = "black";
             redTurnText[i].style.display = "none";
-            blackTurntext[i].textContent = "BLACK WINS!";
+            blackTurnText[i].textContent = "BLACK WINS!";
         }
         $.ajax({
             url: '/end_game/',
@@ -542,12 +543,12 @@ function changePlayer() {
         turn = false;
         for (let i = 0; i < redTurnText.length; i++) {
             redTurnText[i].style.color = "lightGrey";
-            blackTurntext[i].style.color = "black";
+            blackTurnText[i].style.color = "black";
         }
     } else {
         turn = true;
-        for (let i = 0; i < blackTurntext.length; i++) {
-            blackTurntext[i].style.color = "lightGrey";
+        for (let i = 0; i < blackTurnText.length; i++) {
+            blackTurnText[i].style.color = "lightGrey";
             redTurnText[i].style.color = "black";
         }
     }

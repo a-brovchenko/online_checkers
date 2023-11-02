@@ -6,8 +6,7 @@ to an adjacent and unoccupied dark square, or "jumping" one of the opponent's pi
 In this case, one piece "jumps over" the other, there is a vacant square on the opposite side for it to land on.
 A "man" can only jump diagonally forwards, but a "king" can also move diagonally backwards.
 A piece that is jumped is captured and removed from the board.
-Multiple jumps are not allowed.
-Jump is optional
+The jump is mandatory, if the checker has already jumped and can jump again - you must do it.
 
 To register users, you need to specify email in the project settings. Default settings for ukr.net
 if you use gmail, make changes to settings.py
