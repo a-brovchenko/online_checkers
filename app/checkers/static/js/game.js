@@ -568,8 +568,8 @@ function changePlayer() {
 }
 
 var hostname = window.location.hostname;
-
-const socket = new WebSocket(`ws://127.0.0.1:8000/board-${textContent}/`);
+const socket = new WebSocket(`ws://${hostname}:8080/board-${textContent}/`);
+//const socket = new WebSocket(`ws://127.0.0.1:8000/board-${textContent}/`);
 socket.addEventListener('open', (event) => {
     console.log('Соединение установлено');
     var modal = document.getElementById("myModal");
