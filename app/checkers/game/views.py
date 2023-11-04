@@ -164,3 +164,13 @@ def end_game(request):
         p1.save()
         p2.save()
         return JsonResponse({'1' : 1})
+
+def check_player(request):
+    if request.method == 'POST':
+        board = request.POST.get('board')
+        board = Board.objects.get(number_board=board)
+        if board.player1 != 0 and board.player2 != 0:
+            check = True
+        else:
+            check = False
+    return JsonResponse({'check': check})

@@ -16,4 +16,5 @@ urlpatterns = [
     path('player/', player),
     path('change/', change_move),
     path('end_game/', end_game),
+    path('check/', check_player),
 ]

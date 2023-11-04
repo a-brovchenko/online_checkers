@@ -13,6 +13,8 @@ const board = [
 
 /*---------- Cached Variables ----------*/
 // player properties
+
+
 let player;
 let turn = true;
 let redScore = 12;
@@ -31,10 +33,8 @@ let findPiece = function (pieceId) {
 const cells = document.querySelectorAll("td");
 let redsPieces = document.querySelectorAll("p");
 let blacksPieces = document.querySelectorAll("span")
-const redTurnText = document.querySelectorAll(".red-turn-text");
-const blackTurnText = document.querySelectorAll(".black-turn-text");
-const divider = document.querySelector("#divider")
-
+let redTurnText = document.querySelectorAll(".red-turn-text");
+let blackTurnText = document.querySelectorAll(".black-turn-text");
 
 // selected piece properties
 let selectedPiece = {
@@ -91,6 +91,7 @@ $.ajax({
 
 // initialize event listeners on pieces
 function givePiecesEventListeners(jump) {
+
     if (turn) {
         if (jump === undefined){
             for (let i = 0; i < redsPieces.length; i++) {
@@ -110,8 +111,10 @@ function givePiecesEventListeners(jump) {
             }
        }
     } else {
-        for (let i = 0; i < blacksPieces.length; i++) {
-            getPlayerPieces(Number(blacksPieces[i].id))
+        if (jump === undefined){
+            for (let i = 0; i < blacksPieces.length; i++) {
+                getPlayerPieces(Number(blacksPieces[i].id))
+            }
         }
         if (mustMove.length > 0){
             for (let i = 0; i < blacksPieces.length; i++) {
@@ -126,8 +129,10 @@ function givePiecesEventListeners(jump) {
             }
        }
     }
-}
+    redTurnText.forEach(function(element) {element.textContent = player === 1 ? "Ваш ход" : "Ход противника";});
+    blackTurnText.forEach(function(element) {element.textContent = player === 1 ? "Ход противника" : "Ваш ход";});
 
+}
 
 /*---------- Logic ----------*/
 // holds the length of the players piece count
@@ -224,7 +229,12 @@ function checkAvailableJumpSpaces(id) {
         && cells[selectedPiece.indexOfBoardPiece - 18].classList.contains("noPieceHere") !== true
         && board[selectedPiece.indexOfBoardPiece - 9] >= 12) {
             selectedPiece.minusEighteenthSpace = true;
-            selectedPiece.needToFight = true
+        }
+        if (selectedPiece.isKing && (selectedPiece.fourteenthSpace || selectedPiece.eighteenthSpace ||
+        selectedPiece.minusFourteenthSpace || selectedPiece.minusEighteenthSpace) && selectedPiece.indexOfBoardPiece >= 0){
+            mustMove.push(selectedPiece.pieceId)
+        }else if ((selectedPiece.fourteenthSpace || selectedPiece.eighteenthSpace) && selectedPiece.indexOfBoardPiece >= 0){
+            mustMove.push(selectedPiece.pieceId)
         }
     } else {
         if (board[selectedPiece.indexOfBoardPiece + 14] === null
@@ -247,10 +257,12 @@ function checkAvailableJumpSpaces(id) {
         && board[selectedPiece.indexOfBoardPiece - 9] !== null) {
             selectedPiece.minusEighteenthSpace = true;
         }
-    }
-    if ((selectedPiece.fourteenthSpace || selectedPiece.eighteenthSpace ||
-        selectedPiece.minusFourteenthSpace || selectedPiece.minusEighteenthSpace) && selectedPiece.indexOfBoardPiece >= 0) {
-        mustMove.push(selectedPiece.pieceId)
+        if (selectedPiece.isKing && (selectedPiece.fourteenthSpace || selectedPiece.eighteenthSpace ||
+        selectedPiece.minusFourteenthSpace || selectedPiece.minusEighteenthSpace) && selectedPiece.indexOfBoardPiece >= 0){
+            mustMove.push(selectedPiece.pieceId)
+        }else if ((selectedPiece.minusFourteenthSpace || selectedPiece.minusEighteenthSpace) && selectedPiece.indexOfBoardPiece >= 0){
+            mustMove.push(selectedPiece.pieceId)
+        }
     }
     if (selectedPiece.flag){
         selectedPiece.flag = false
@@ -560,6 +572,8 @@ var hostname = window.location.hostname;
 const socket = new WebSocket(`ws://127.0.0.1:8000/board-${textContent}/`);
 socket.addEventListener('open', (event) => {
     console.log('Соединение установлено');
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
 
 });
 socket.addEventListener('message', (event) => {
@@ -572,5 +586,27 @@ socket.addEventListener('message', (event) => {
 
 
 });
+function checkPlayers(){
+    $.ajax({
+    async: false,
+    url: '/check/',
+    type: 'POST',
+    data: {
+            'check': 'check',
+            'board': textContent,
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function (response) {
+            if (response.check){
+                clearInterval(intervalId);
+                var modal = document.getElementById("myModal");
 
-givePiecesEventListeners();
+                modal.style.display = "none";
+                givePiecesEventListeners();
+            }
+        }
+
+
+    });
+}
+let intervalId = setInterval(checkPlayers, 5000);

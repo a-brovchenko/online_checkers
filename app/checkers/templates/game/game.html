@@ -15,8 +15,8 @@
 </head>
 <body>
     <main>
-        <strong>{{ board_name }}</strong>
-        <user>{{ request.user.id }}</user>
+        <strong style="display: none;">{{ board_name }}</strong>
+        <user style="display: none;">{{ request.user.id }}</user>
         <div class="red-turn-text mobile">
             Ходит Игрок1
         </div>
@@ -107,7 +107,6 @@
             <div class="red-turn-text">
                 Ходит Игрок1
             </div>
-<!--            <p id="divider">|</p>-->
             <div class="black-turn-text">
                 Ходит Игрок2
             </div>
@@ -121,5 +120,13 @@
     <script>
 
     </script>
+
+    </div>
+        <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Для начала игры дождитесь противника</p>
+      </div>
+    </div>
 </body>
 </html>
