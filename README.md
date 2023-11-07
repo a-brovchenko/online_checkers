@@ -1,5 +1,14 @@
 # Simple checkers online
 This is a simple checkers implementation using the daphne server.
+The game was based on the code from [this repository](https://github.com/RyanBranco/Checkers).
+
+Following has been added and implemented:
+- Online multiplayer game
+- Mandatory jump
+- Double jump
+- King move
+- Minor fixes
+
 There are two ways to move a piece: 
 Simply sliding a piece diagonally forwards (also diagonally backwards in the case of kings) 
 to an adjacent and unoccupied dark square, or "jumping" one of the opponent's pieces. 
