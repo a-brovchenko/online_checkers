@@ -15,7 +15,7 @@ SECRET_KEY = dotenv_variables['SECRET_KEY']
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['checkers-p2p.pp.ua']
 
 INSTALLED_APPS = [
     'channels',
