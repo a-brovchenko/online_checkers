@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN \
     apk update && \
-    apk add --virtual build-deps gcc python3-dev musl-dev && \
+    apk add --virtual build-deps gcc python3-dev musl-dev libffi-dev && \
     apk add --no-cache mariadb-dev
 
 COPY app/requirements.txt ./
