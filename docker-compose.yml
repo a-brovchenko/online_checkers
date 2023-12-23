@@ -38,7 +38,7 @@ services:
       default:
     restart: always
     ports:
-      - "8080:8080"
+      - "80:8080"
     build:
       context: .
       dockerfile: Dockerfile
